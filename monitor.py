@@ -50,9 +50,9 @@ def main():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument(
-        '-t', '--looptime', default=60, help='loop query time')
+        '-t', '--looptime',type=int, default=60, help='loop query time')
     parser.add_argument(
-        '-p', '--port', default=9400, help='set the listened port')
+        '-p', '--port', type=int, default=9400, help='set the listened port')
     parser.add_argument(
         '-d', '--logdir', default='log', help='set the listened port')
     parser.add_argument(
@@ -66,6 +66,8 @@ def main():
     
     application = tornado.web.Application([('/monitor', MonitorHandler)]).listen(args.port)
 
+    print(args.looptime)
+    print(type(args.looptime))
     tornado.ioloop.PeriodicCallback(start, args.looptime*1000).start()
     tornado.ioloop.IOLoop.instance().start()
 
