@@ -5,6 +5,7 @@ import requests
 import sys
 import time
 import argparse
+import os
 
 import tornado.ioloop
 import tornado.gen
@@ -52,11 +53,16 @@ def main():
         '-t', '--looptime', default=60, help='loop query time')
     parser.add_argument(
         '-p', '--port', default=9400, help='set the listened port')
+    parser.add_argument(
+        '-d', '--logdir', default='log', help='set the listened port')
+    parser.add_argument(
+        '-n', '--logname', default='monitor.log', help='set the listened port')
     args = parser.parse_args()
-    
-    
 
-    common.config_log('log', 'monitor.log', 'DEBUG', enable_stream_handler=True)
+    if not os.path.isdir(args.logdir):
+        os.makedirs(args.logdir)
+    
+    common.config_log(args.logdir, args.logname, 'DEBUG', enable_stream_handler=True)
     
     application = tornado.web.Application([('/monitor', MonitorHandler)]).listen(args.port)
 
