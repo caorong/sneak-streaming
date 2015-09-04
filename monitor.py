@@ -66,8 +66,6 @@ def main():
     
     application = tornado.web.Application([('/monitor', MonitorHandler)]).listen(args.port)
 
-    print(args.looptime)
-    print(type(args.looptime))
     tornado.ioloop.PeriodicCallback(start, args.looptime*1000).start()
     tornado.ioloop.IOLoop.instance().start()
 
