@@ -19,7 +19,7 @@ def main():
 
     r = requests.get('http://'+args.host + ':' + args.port + '/monitor')
     wl = r.json()
-    print(wl)
+    # print(wl)
 
     if wl:
         call(["/usr/bin/osascript", "-e", "display notification \"live - {}\" with title \"sc2\" subtitle \"now streaming {}\"".format(','.join(wl),  "")])

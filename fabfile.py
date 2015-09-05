@@ -22,7 +22,7 @@ def _getLiveUrl(target):
        # default
        # xx = streams.popitem()
        # return xx[1].url
-       xx = streams.get('best')
+       xx = streams.get('high')
        return xx.url
    return None
 
