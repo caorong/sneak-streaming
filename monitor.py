@@ -14,7 +14,7 @@ import tornado.web
 import common
 import json
 
-watchlist = ['sc2rain', 'egjd', 'krfantasy', 'naniwasc2', 'sc2creator','forgg']
+watchlist = ['sc2rain', 'egjd', 'krfantasy', 'naniwasc2', 'sc2creator','forgg', 'bostossmc']
 # watchlist = ['sc2rain', 'ogamingsc2']
 
 """
