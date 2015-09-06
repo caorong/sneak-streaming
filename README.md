@@ -1,6 +1,6 @@
 # sneak-streaming
 
-auto sneak streaming twitch's sc2 game streaming through gfw
+semi-automatic sneak streaming twitch's sc2 game streaming through gfw
 
 
 ### streaming priority
@@ -29,8 +29,6 @@ curl -H 'Accept: application/vnd.twitchtv.v3+json' \
 2. `clientNotifier` work on client side, query monitor timely, and notify to local notification center
 
 3. `fabfile.py` start ffmpeg re-streamer on remote vps
-
-
 
 
 
