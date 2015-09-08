@@ -1,0 +1,5 @@
+fabric
+tornado
+requests
+argparse # for py2
+Livestreamer

@@ -17,6 +17,7 @@ from decisionMaker import make_decision
 watchlist = common.watchlist
 OS = platform.system() # mac - Darwin / linux - Linux
 CURR_DIR = os.path.dirname(os.path.realpath(__file__))
+REMOTE_VPS_IP = None
 
 def main():
     parser = argparse.ArgumentParser(
@@ -30,6 +31,9 @@ def main():
     args = parser.parse_args()
 
     r = requests.get('http://'+args.host + ':' + args.port + '/monitor')
+    global REMOTE_VPS_IP
+    if not REMOTE_VPS_IP:
+        REMOTE_VPS_IP = args.host
     wl = r.json()
 
     if args.debug:
@@ -48,11 +52,6 @@ def main():
                 call_notifier(previous_wl, wl)
     else:
         call_notifier(None, wl)
-        # elif OS == 'Linux':
-            # try:
-            # except Exception as e:
-                # print(e)
-            
 
     with open(_fname, 'wb') as f:
         pickle.dump(json.dumps(wl), f, 0)
@@ -61,10 +60,14 @@ def call_notifier(pwl, wl):
     if OS == 'Darwin':
         call(["/usr/bin/osascript", "-e", "display notification \"live - {}\" with title \"sc2\" subtitle \"now streaming {}\"".format(','.join(wl),  "")])
     elif OS == 'Linux':
+    # elif OS == 'Darwin':
         target = make_decision(pwl, wl)
         if target:
+            print(target)
             # fix yourself
-            call(["/usr/bin/python", CURR_DIR + '/fabfile.py', target, watchlist[target], args.host])
+            call(["/usr/bin/python", CURR_DIR + '/fabfile.py', str(watchlist[target]), str(REMOTE_VPS_IP)])
+            
+            # call(["python", CURR_DIR + '/fabfile.py', str(watchlist[target]), str(REMOTE_VPS_IP)])
 
 if __name__ == '__main__':
     main()

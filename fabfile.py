@@ -24,6 +24,7 @@ roomNameDict = {
         'forgg':'forgg',
         'sc2creator':'sc2creator',
         'Journey92':'SAMSUNG Journey',
+        'starcraft':'startcraft',
         }
 
 def _getLiveUrl(target):
@@ -69,7 +70,7 @@ if __name__ == '__main__':
         print('python fabfile.py target Host dycode')
         exit()
     # getLiveUrl('gsl')
-
+    print(sys.argv)
     env.host_string = 'root@'+ sys.argv[2]
     print(env)
 
