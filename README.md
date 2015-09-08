@@ -26,10 +26,12 @@ curl -H 'Accept: application/vnd.twitchtv.v3+json' \
 
 1. `monitor` watch stream timely
 
-2. `clientNotifier` work on client side, query monitor timely, and notify to local notification center
+2. `clientNotifier` work on client side, query monitor timely, and it will ->
+    
+    * notify to local notification center (on Mac)
+    * auto call fabfile.py (on Linux)
 
 3. `fabfile.py` start ffmpeg re-streamer on remote vps
-
 
 
 

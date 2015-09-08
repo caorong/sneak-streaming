@@ -2,13 +2,21 @@
 # coding=utf-8
 
 import os
+import platform
 import argparse
 from subprocess import call
 import json
 import pickle
 
-        
 import requests
+
+import common
+from decisionMaker import make_decision
+
+
+watchlist = common.watchlist
+OS = platform.system() # mac - Darwin / linux - Linux
+CURR_DIR = os.path.dirname(os.path.realpath(__file__))
 
 def main():
     parser = argparse.ArgumentParser(
@@ -35,21 +43,33 @@ def main():
     if os.path.isfile(_fname):
         with open(_fname, 'rb') as f:
             pdata = pickle.load(f)
-            if json.loads(pdata) != wl:
-                call_notifier(wl)
+            previous_wl = json.loads(pdata)
+            if previous_wl != wl:
+                call_notifier(previous_wl, wl)
     else:
-        call_notifier(wl)
-
+        call_notifier(None, wl)
+        # elif OS == 'Linux':
+            # try:
+            # except Exception as e:
+                # print(e)
+            
 
     with open(_fname, 'wb') as f:
         pickle.dump(json.dumps(wl), f, 0)
         
-def call_notifier(wl):
-    call(["/usr/bin/osascript", "-e", "display notification \"live - {}\" with title \"sc2\" subtitle \"now streaming {}\"".format(','.join(wl),  "")])
-
+def call_notifier(pwl, wl):
+    if OS == 'Darwin':
+        call(["/usr/bin/osascript", "-e", "display notification \"live - {}\" with title \"sc2\" subtitle \"now streaming {}\"".format(','.join(wl),  "")])
+    elif OS == 'Linux':
+        target = make_decision(pwl, wl)
+        if target:
+            # fix yourself
+            call(["/usr/bin/python", CURR_DIR + '/fabfile.py', target, watchlist[target], args.host])
 
 if __name__ == '__main__':
     main()
+
+
 
 
 

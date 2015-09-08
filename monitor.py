@@ -14,8 +14,7 @@ import tornado.web
 import common
 import json
 
-watchlist = ['sc2rain', 'egjd', 'krfantasy', 'naniwasc2', 'sc2creator','forgg', 'bostossmc', 'Journey92']
-# watchlist = ['sc2rain', 'ogamingsc2']
+watchlist = common.watchlist
 
 """
 curl -H 'Accept: application/vnd.twitchtv.v3+json' \
