@@ -15,6 +15,8 @@ fab streaming:target='xxx',dycode='xxx'
 
 """
 
+CURR_DIR = os.path.dirname(os.path.realpath(__file__))
+
 roomNameDict = {
         'bostossmc':'神族总统MC',
         'sc2rain':'大雨神',
@@ -41,9 +43,9 @@ def _getLiveUrl(target):
 
 def _get_rtmpurl():
     # close and start live
-    local('./close_dy_live.sh')
-    local('./open_dy_live.sh')
-    j = local('./req_dy_rtmp.sh', capture=True)
+    local('/bin/bash {}/close_dy_live.sh'.format(CURR_DIR))
+    local('/bin/bash {}/open_dy_live.sh'.format(CURR_DIR))
+    j = local('/bin/bash {}/req_dy_rtmp.sh'.format(CURR_DIR), capture=True)
     print(j)
     return json.loads(j.strip())['rtmp_send']['rtmp_val']
 
@@ -53,7 +55,7 @@ def streaming(target, dycode=''):
     if not dycode:
         dycode = _get_rtmpurl()
     # change room name
-    local('./change_dy_roomname.sh {}'.format(urllib.quote(roomNameDict[target] + '第一视角')))
+    local('/bin/bash {}/change_dy_roomname.sh {}'.format(CURR_DIR, urllib.quote(roomNameDict[target] + '第一视角')))
 
     cmd = "/root/FFmpeg/ffmpeg -re -i '{}' -c:v libx264 -b:v 1000k -c:a libfdk_aac -profile:a aac_he -ac 2 -ar 44100 -ab 64k -f flv 'rtmp://send3.douyutv.com/live/{}'".format(url, dycode)
     print
