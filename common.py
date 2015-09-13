@@ -4,7 +4,7 @@
 import logging
 import os
 
-watchlist = ['sc2rain','egjd','krfantasy','sc2creator','Journey92','forgg','naniwasc2', 'bostossmc']
+watchlist = ['sc2rain','egjd','krfantasy','sc2creator','khansolar','Journey92','forgg','naniwasc2', 'bostossmc']
 
 def config_log(log_dir, log_file, log_level='INFO',
                back_count=7, name="", enable_stream_handler=True,

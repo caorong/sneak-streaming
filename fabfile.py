@@ -26,6 +26,7 @@ roomNameDict = {
         'forgg':'forgg',
         'sc2creator':'sc2creator',
         'Journey92':'SAMSUNG Journey',
+        'khansolar': "Samsung's Zerg Solar",
         'starcraft':'startcraft',
         }
 
