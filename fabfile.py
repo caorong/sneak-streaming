@@ -28,6 +28,7 @@ roomNameDict = {
         'Journey92':'SAMSUNG Journey',
         'khansolar': "Samsung's Zerg Solar",
         'starcraft':'startcraft',
+        'liquidmana':'liquidMaNa ',
         }
 
 def _getLiveUrl(target):

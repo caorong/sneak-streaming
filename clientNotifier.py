@@ -16,6 +16,7 @@ from decisionMaker import make_decision
 
 watchlist = common.watchlist
 OS = platform.system() # mac - Darwin / linux - Linux
+# OS = 'Linux'
 CURR_DIR = os.path.dirname(os.path.realpath(__file__))
 REMOTE_VPS_IP = None
 
@@ -66,7 +67,6 @@ def call_notifier(pwl, wl):
             print(target)
             # fix yourself
             call(["/usr/bin/python", CURR_DIR + '/fabfile.py', str(watchlist[target]), str(REMOTE_VPS_IP)])
-            
             # call(["python", CURR_DIR + '/fabfile.py', str(watchlist[target]), str(REMOTE_VPS_IP)])
 
 if __name__ == '__main__':
