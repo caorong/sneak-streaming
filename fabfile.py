@@ -29,7 +29,8 @@ roomNameDict = {
         'khansolar': "Samsung's Zerg Solar",
         'starcraft':'startcraft',
         'liquidmana':'liquidMaNa ',
-        'redbullesports': '红牛杯-GRAND FINALS StarCraft II - Archon Mode - LoTV'
+        'redbullesports':'红牛杯-执政官-LoTV',
+        'mdstephano': 'Stephano LoTV'
         }
 
 def _getLiveUrl(target):

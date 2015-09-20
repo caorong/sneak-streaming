@@ -16,7 +16,7 @@ from decisionMaker import make_decision
 
 watchlist = common.watchlist
 OS = platform.system() # mac - Darwin / linux - Linux
-# OS = 'Linux'
+#  OS = 'Linux'
 CURR_DIR = os.path.dirname(os.path.realpath(__file__))
 REMOTE_VPS_IP = None
 
@@ -62,12 +62,14 @@ def call_notifier(pwl, wl):
         call(["/usr/bin/osascript", "-e", "display notification \"live - {}\" with title \"sc2\" subtitle \"now streaming {}\"".format(','.join(wl),  "")])
     elif OS == 'Linux':
     # elif OS == 'Darwin':
+        #  print(pwl, wl)
         target = make_decision(pwl, wl)
+        #  print('desicion', target)
         if target:
-            print(target)
+            #  print(target, REMOTE_VPS_IP)
             # fix yourself
             call(["/usr/bin/python", CURR_DIR + '/fabfile.py', str(watchlist[target]), str(REMOTE_VPS_IP)])
-            # call(["python", CURR_DIR + '/fabfile.py', str(watchlist[target]), str(REMOTE_VPS_IP)])
+            #  call(["python", CURR_DIR + '/fabfile.py', str(watchlist[target]), str(REMOTE_VPS_IP)])
 
 if __name__ == '__main__':
     main()
