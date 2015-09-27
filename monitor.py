@@ -34,7 +34,7 @@ def start():
                         headers={'Accept': 'application/vnd.twitchtv.v3+json'})
                 if r.json().get('stream'):
                     existslist.append(i)       
-        except Exception, e:
+        except Exception as e:
             raise e
         finally:
             pass
@@ -65,6 +65,7 @@ def main():
     
     application = tornado.web.Application([('/monitor', MonitorHandler)]).listen(args.port)
 
+    start()
     tornado.ioloop.PeriodicCallback(start, args.looptime*1000).start()
     tornado.ioloop.IOLoop.instance().start()
 
