@@ -25,19 +25,18 @@ existslist = []
 
 @tornado.gen.coroutine
 def start():
-    # while True:
-        try:
-            global existslist
-            existslist = []
-            for i in watchlist:
-                r = requests.get('https://api.twitch.tv/kraken/streams/' + i,\
-                        headers={'Accept': 'application/vnd.twitchtv.v3+json'})
-                if r.json().get('stream'):
-                    existslist.append(i)       
-        except Exception as e:
-            raise e
-        finally:
-            pass
+    try:
+        global existslist
+        existslist = []
+        for i in watchlist:
+            r = requests.get('https://api.twitch.tv/kraken/streams/' + i,\
+                    headers={'Accept': 'application/vnd.twitchtv.v3+json'})
+            if r.json().get('stream'):
+                existslist.append(i)       
+    except Exception as e:
+        raise e
+    finally:
+        pass
 
 class MonitorHandler(tornado.web.RequestHandler):
     
