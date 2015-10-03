@@ -35,3 +35,23 @@ def config_log(log_dir, log_file, log_level='INFO',
     logger.addHandler(loghandler_file_rotated)
     if enable_stream_handler:
         logger.addHandler(loghandler_stream)
+
+
+def only_stream(name, log_level='INFO', multithreading=False, multiprocessing=False):
+    log_format = '[%(levelname)s]'
+    if multithreading:
+        log_format += '<t%(thread)d - %(threadName)s>'
+    if multiprocessing:
+        log_format += '<p%(process)d - %(processName)s>'
+    log_format += '<%(module)s>-%(funcName)s: %(message)s --- %(asctime)s'
+    log_formatter = logging.Formatter(log_format)
+
+    loghandler_stream = logging.StreamHandler()
+    loghandler_stream.setFormatter(log_formatter)
+    loghandler_stream.setLevel(logging.DEBUG)
+
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.DEBUG)
+    logger.addHandler(loghandler_stream)
+
+
