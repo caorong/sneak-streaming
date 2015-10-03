@@ -68,6 +68,13 @@ fully-automatic sneak streaming twitch's sc2 game streaming through gfw
 curl -H 'Accept: application/vnd.twitchtv.v3+json' \
 -X GET https://api.twitch.tv/kraken/streams/sc2rain
 
+### missing bash script
+
+how to make missing bash script
+
+![Image of Yaktocat](assets/getcurl.png)
+
+script example see assets
 
 ### plugin
 
