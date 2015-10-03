@@ -72,9 +72,11 @@ curl -H 'Accept: application/vnd.twitchtv.v3+json' \
 
 how to make missing bash script
 
+you can generate it use chrome
+
 ![Image of Yaktocat](assets/getcurl.png)
 
-script example see assets
+script example see [assets](https://github.com/caorong/sneak-streaming/tree/master/assets), it will list detail base url.
 
 ### plugin
 
