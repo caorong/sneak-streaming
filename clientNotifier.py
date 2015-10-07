@@ -44,7 +44,6 @@ def main():
 
     # if file exists, and live list is same
     # do not call notification
-
     if os.path.isfile(_fname):
         with open(_fname, 'rb') as f:
             pdata = pickle.load(f)
@@ -65,9 +64,11 @@ def call_notifier(pwl, wl):
         #  print(pwl, wl)
         target = make_decision(pwl, wl)
         #  print('desicion', target)
+        #  print('target', target)
         if target:
             #  print(target, REMOTE_VPS_IP)
             # fix yourself
+            #  print(["/usr/bin/python", CURR_DIR + '/fabfile.py', str(watchlist[target]), str(REMOTE_VPS_IP)])
             call(["/usr/bin/python", CURR_DIR + '/fabfile.py', str(watchlist[target]), str(REMOTE_VPS_IP)])
             #  call(["python", CURR_DIR + '/fabfile.py', str(watchlist[target]), str(REMOTE_VPS_IP)])
 

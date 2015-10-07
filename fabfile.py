@@ -29,8 +29,11 @@ roomNameDict = {
         'khansolar': "Samsung's Zerg Solar",
         'starcraft':'startcraft',
         'liquidmana':'liquidMaNa ',
+        'mdstephano': 'Stephano LoTV',
+        'axryung': 'Ryung LoTV',
+        'missmagitek': '星际妹子 missmagitek',
+        'inksie':'星际妹子 inksie',
         'redbullesports':'红牛杯-执政官-LoTV',
-        'mdstephano': 'Stephano LoTV'
         }
 
 def _getLiveUrl(target):
@@ -73,7 +76,7 @@ def streaming(target, dycode=''):
 if __name__ == '__main__':
     print(sys.argv)
     if len(sys.argv) < 3:
-        print('python fabfile.py target Host dycode')
+        print('python fabfile.py target Host sshkey-filename')
         exit()
     # getLiveUrl('gsl')
     print(sys.argv)
@@ -81,7 +84,8 @@ if __name__ == '__main__':
     print(env)
 
     if len(sys.argv) == 4:
-        streaming(sys.argv[1], sys.argv[3])
+        env.key_filename=[sys.argv[3]]
+        streaming(sys.argv[1])
     else:
         streaming(sys.argv[1])
 

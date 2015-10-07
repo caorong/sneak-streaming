@@ -31,4 +31,5 @@ if __name__ == '__main__':
     print(live_priority)
     print(make_decision(['sc2creator','egjd'], ['sc2rain', 'forgg']))
     print(make_decision([], ['sc2rain', 'forgg']))
+    print(make_decision([], ['axryung', 'missmagitek']))
     
