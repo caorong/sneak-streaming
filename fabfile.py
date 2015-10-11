@@ -3,7 +3,7 @@
 
 import json
 import socket, datetime, os, requests, urllib2, sys
-from fabric.api import env, roles, with_settings, sudo, lcd, cd, run, parallel, local, hosts
+from fabric.api import env, roles, with_settings, sudo, lcd, cd, run, parallel, local, hosts, settings
 from fabric.contrib.files import exists
 from livestreamer import Livestreamer
 import urllib
@@ -68,9 +68,12 @@ def streaming(target, dycode=''):
     print
     print(cmd)
     # kill old
-    pid = run("ps -ef|grep SCREEN|grep -v grep |awk '{print $2}'")
-    if pid:
-        run('kill -9 {}'.format(pid))
+    #  pid = run("ps -ef|grep SCREEN|grep -v grep |awk '{print $2}'")
+    #  if pid:
+        #  run('kill -9 {}'.format(pid))
+    with settings(warn_only=True):
+        #  run('killall -9 /root/FFmpeg/ffmpeg')
+        run('killall -9 ffmpeg')
     run("/usr/bin/screen -d -m " + cmd + " && sleep 1")
 
 if __name__ == '__main__':
