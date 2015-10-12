@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
 # coding=utf-8
 
-import requests
-import sys
-import time
 import argparse
 import os
 
 import tornado.ioloop
 import tornado.gen
 import tornado.web
+import tornado.httpclient
 
 import common
 import json
@@ -23,32 +21,39 @@ curl -H 'Accept: application/vnd.twitchtv.v3+json' \
 
 existslist = []
 
+
 @tornado.gen.coroutine
 def start():
     try:
         global existslist
         existslist = []
         for i in watchlist:
-            r = requests.get('https://api.twitch.tv/kraken/streams/' + i,\
-                    headers={'Accept': 'application/vnd.twitchtv.v3+json'})
-            if r.json().get('stream'):
-                existslist.append(i)       
+            http_client = tornado.httpclient.AsyncHTTPClient()
+
+            r = yield http_client.fetch(
+                'https://api.twitch.tv/kraken/streams/'
+                + i,
+                headers={'Accept': 'application/vnd.twitchtv.v3+json'})
+            if json.loads(r.body).get('stream', None):
+                existslist.append(i)
     except Exception as e:
         raise e
     finally:
         pass
 
+
 class MonitorHandler(tornado.web.RequestHandler):
-    
+
     @tornado.gen.coroutine
     def get(self):
         self.write(json.dumps(existslist))
+
 
 def main():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument(
-        '-t', '--looptime',type=int, default=60, help='loop query time')
+        '-t', '--looptime', type=int, default=60, help='loop query time')
     parser.add_argument(
         '-p', '--port', type=int, default=9400, help='set the listened port')
     parser.add_argument(
@@ -59,10 +64,11 @@ def main():
 
     if not os.path.isdir(args.logdir):
         os.makedirs(args.logdir)
-    
-    common.config_log(args.logdir, args.logname, 'DEBUG', enable_stream_handler=True)
-    
-    application = tornado.web.Application([('/monitor', MonitorHandler)]).listen(args.port)
+
+    common.config_log(args.logdir, args.logname, 'DEBUG',
+                      enable_stream_handler=True)
+
+    tornado.web.Application([('/monitor', MonitorHandler)]).listen(args.port)
 
     start()
     tornado.ioloop.PeriodicCallback(start, args.looptime*1000).start()
@@ -70,5 +76,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
