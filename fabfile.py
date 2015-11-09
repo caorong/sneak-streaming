@@ -34,6 +34,7 @@ roomNameDict = {
         'missmagitek': '星际妹子 missmagitek',
         'inksie':'星际妹子 inksie',
         'redbullesports':'红牛杯-执政官-LoTV',
+        'wayne379':'台湾谐星 鬼手辉',
         }
 
 def _getLiveUrl(target):
