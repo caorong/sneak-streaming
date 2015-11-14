@@ -13,6 +13,10 @@ from urllib import request
 import requests
 from queue import Queue
 
+import logging
+
+logging.basicConfig(filename='scboy.log', level=logging.DEBUG)
+
 g_rid= b'5275'
 g_username= b'visitor42'
 #  g_username= b'viadslkfjalsdfjl'
@@ -129,8 +133,8 @@ def get_longinres(s_ip=b'117.79.132.20', s_port=8001, rid=b'5275'):
 
 def get_danmu(rid=b'5275', ip=b'danmu.douyutv.com', port=8001, username=b'visitor42', gid=b'0'):
     "args needs bytes not str"
-    print('==========danmu')
-
+    print('==========danmu ---> ', ip, port)
+        
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect((ip,int(port)))
     sendmsg(s,b'type@=loginreq/username@='+username+b'/password@=1234567890123456/roomid@='+rid+b'/\x00')
@@ -159,6 +163,7 @@ def get_danmu(rid=b'5275', ip=b'danmu.douyutv.com', port=8001, username=b'visito
                 nick= msg[b'snick'].decode('utf8')
                 content= msg.get(b'content',b'undefined').decode('utf8')
                 print(nick, ': ', content)
+                logging.debug("{}: {}".format(nick, content))
                 send_to_slack(nick, content)
         elif msgtype==b'donateres':
             sui= unpackage(msg.get(b'sui',b'nick@=undifined//00'))
@@ -271,9 +276,11 @@ def get_room_info(url):
 
     conf = get_content("http://www.douyutv.com/api/client/room/"+roomid)
     metadata = json.loads(conf)
+    print(metadata)
     servers= metadata['data']['servers']
 
     #  exit()
+    print(servers)
     dest_server= servers[0]
     return {'s_ip': dest_server['ip'],
             's_port': dest_server['port'],
@@ -314,13 +321,20 @@ if __name__=='__main__':
     """
     python3 comment-douyu.py http://www.douyutv.com/xxx https://hooks.slack.com/services/xx/xx/xx
     """
-    url= sys.argv[1] if len(sys.argv)>1 else 'http://www.douyutv.com/meizhi' 
+    url = sys.argv[1] if len(sys.argv)>1 else 'http://www.douyutv.com/meizhi' 
     print(len(sys.argv))
     if(len(sys.argv) > 2):
         #  global WEBHOOK_URL
         WEBHOOK_URL = sys.argv[2]
         # start send slack thread
         threading.Thread(target=_send_to_slack).start()
-    main(url)
+    while True:
+        print(1)
+        print(1)
+        try:
+            main(url)
+            time.sleep(1)
+        except:
+            pass
     #  send_to_slack('阿道夫', '啊大家发撒地方')
 

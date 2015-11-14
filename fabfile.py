@@ -7,6 +7,7 @@ from fabric.api import env, roles, with_settings, sudo, lcd, cd, run, parallel, 
 from fabric.contrib.files import exists
 from livestreamer import Livestreamer
 import urllib
+from common import roomNameDict
 
 """
 watchlist = ['sc2rain', 'egjd', 'krfantasy', 'naniwasc2', 'forgg']
@@ -17,37 +18,19 @@ fab streaming:target='xxx',dycode='xxx'
 
 CURR_DIR = os.path.dirname(os.path.realpath(__file__))
 
-roomNameDict = {
-        'bostossmc':'神族总统MC',
-        'sc2rain':'大雨神',
-        'egjd':'菜东',
-        'krfantasy':'范太子',
-        'naniwasc2':'naniwa',
-        'forgg':'forgg',
-        'sc2creator':'sc2creator',
-        'Journey92':'SAMSUNG Journey',
-        'khansolar': "Samsung's Zerg Solar",
-        'starcraft':'startcraft',
-        'liquidmana':'liquidMaNa ',
-        'mdstephano': 'Stephano LoTV',
-        'axryung': 'Ryung LoTV',
-        'missmagitek': '星际妹子 missmagitek',
-        'inksie':'星际妹子 inksie',
-        'redbullesports':'红牛杯-执政官-LoTV',
-        'wayne379':'台湾谐星 鬼手辉',
-        }
 
 def _getLiveUrl(target):
-   livestreamer = Livestreamer()
-   streams = livestreamer.streams("http://www.twitch.tv/" + target)
-   print(streams)
-   if streams:
-       # default
-       # xx = streams.popitem()
-       # return xx[1].url
-       xx = streams.get('high')
-       return xx.url
-   return None
+    livestreamer = Livestreamer()
+    streams = livestreamer.streams("http://www.twitch.tv/" + target)
+    print(streams)
+    if streams:
+        # default
+        # xx = streams.popitem()
+        # return xx[1].url
+        xx = streams.get('high')
+        return xx.url
+    return None
+
 
 def _get_rtmpurl():
     # close and start live
@@ -56,6 +39,7 @@ def _get_rtmpurl():
     j = local('/bin/bash {}/req_dy_rtmp.sh'.format(CURR_DIR), capture=True)
     print(j)
     return json.loads(j.strip())['rtmp_send']['rtmp_val']
+
 
 def streaming(target, dycode=''):
     url = _getLiveUrl(target)
@@ -84,14 +68,11 @@ if __name__ == '__main__':
         exit()
     # getLiveUrl('gsl')
     print(sys.argv)
-    env.host_string = 'root@'+ sys.argv[2]
+    env.host_string = 'root@' + sys.argv[2]
     print(env)
 
     if len(sys.argv) == 4:
-        env.key_filename=[sys.argv[3]]
+        env.key_filename = [sys.argv[3]]
         streaming(sys.argv[1])
     else:
         streaming(sys.argv[1])
-
-
-

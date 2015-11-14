@@ -14,6 +14,8 @@ import json
 
 watchlist = common.watchlist
 
+watchlist = ["Journey92", "wayne379"]
+
 """
 curl -H 'Accept: application/vnd.twitchtv.v3+json' \
 -X GET https://api.twitch.tv/kraken/streams/sc2rain
@@ -25,8 +27,7 @@ existslist = []
 @tornado.gen.coroutine
 def start():
     try:
-        global existslist
-        existslist = []
+        _existslist = []
         for i in watchlist:
             http_client = tornado.httpclient.AsyncHTTPClient()
 
@@ -34,8 +35,13 @@ def start():
                 'https://api.twitch.tv/kraken/streams/'
                 + i,
                 headers={'Accept': 'application/vnd.twitchtv.v3+json'})
-            if json.loads(r.body).get('stream', None):
-                existslist.append(i)
+            bd = r.body
+            #  print(bd)
+            if json.loads(bd.decode('utf-8')).get('stream'):
+                _existslist.append(i)
+            #  print(_existslist, existslist)
+            global existslist
+            existslist = _existslist
     except Exception as e:
         raise e
     finally:
