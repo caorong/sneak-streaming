@@ -36,7 +36,7 @@ def start():
             bd = r.body
             if json.loads(bd.decode('utf-8')).get('stream'):
                 _existslist.append(i)
-            global existslist
+        global existslist
         existslist = _existslist
     except Exception as e:
         raise e
