@@ -14,8 +14,6 @@ import json
 
 watchlist = common.watchlist
 
-watchlist = ["Journey92", "wayne379"]
-
 """
 curl -H 'Accept: application/vnd.twitchtv.v3+json' \
 -X GET https://api.twitch.tv/kraken/streams/sc2rain
@@ -36,12 +34,10 @@ def start():
                 + i,
                 headers={'Accept': 'application/vnd.twitchtv.v3+json'})
             bd = r.body
-            #  print(bd)
             if json.loads(bd.decode('utf-8')).get('stream'):
                 _existslist.append(i)
-            #  print(_existslist, existslist)
             global existslist
-            existslist = _existslist
+        existslist = _existslist
     except Exception as e:
         raise e
     finally:
@@ -59,7 +55,7 @@ def main():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument(
-        '-t', '--looptime', type=int, default=60, help='loop query time')
+        '-t', '--looptime', type=int, default=10, help='loop query time')
     parser.add_argument(
         '-p', '--port', type=int, default=9400, help='set the listened port')
     parser.add_argument(
