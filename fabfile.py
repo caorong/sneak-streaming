@@ -43,12 +43,13 @@ def _get_rtmpurl():
 
 def streaming(target, dycode=''):
     url = _getLiveUrl(target)
+    print(url)
 
     if not dycode:
         dycode = _get_rtmpurl()
     # change room name
-    local('/bin/bash {}/change_dy_roomname.sh {}'.format(CURR_DIR, urllib.quote(roomNameDict[target] + '第一视角')))
-
+    local('/bin/bash {}/change_dy_roomname.sh {}'.format(CURR_DIR, urllib.quote(roomNameDict[target])))
+#  + '第一视角'
     cmd = "/root/FFmpeg/ffmpeg -re -i '{}' -c:v libx264 -b:v 1000k -c:a libfdk_aac -profile:a aac_he -ac 2 -ar 44100 -ab 64k -f flv 'rtmp://send3.douyutv.com/live/{}'".format(url, dycode)
     print
     print(cmd)

@@ -36,3 +36,4 @@ if __name__ == '__main__':
     print(make_decision(['sc2creator', 'egjd'], ['sc2rain', 'forgg']))
     print(make_decision([], ['sc2rain', 'forgg']))
     print(make_decision([], ['axryung', 'missmagitek']))
+    print(make_decision([], ['totalbiscuit', 'missmagitek']))

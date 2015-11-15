@@ -66,12 +66,12 @@ def call_notifier(pwl, wl, identifiy_file=''):
     if OS == 'Darwin':
         call(["/usr/bin/osascript", "-e", "display notification \"live - {}\" with title \"sc2\" subtitle \"now streaming {}\"".format(','.join(wl),  "")])
     elif OS == 'Linux':
-    # elif OS == 'Darwin':
+        # elif OS == 'Darwin':
         #  print(pwl, wl)
         target = make_decision(pwl, wl)
         #  print('desicion', target)
-        #  print('target', target)
-        if target:
+        print('target', target)
+        if target is not None:
             #  print(target, REMOTE_VPS_IP)
             # fix yourself
             #  print(["/usr/bin/python", CURR_DIR + '/fabfile.py', str(watchlist[target]), str(REMOTE_VPS_IP)])
