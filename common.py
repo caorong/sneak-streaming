@@ -25,6 +25,7 @@ roomNameDict = OrderedDict([
     ('mdstephano', 'Stephano LoTV'),
     ('redbullesports', '红牛杯-执政官-LoTV'),
     ('wayne379', '台湾谐星-鬼手辉'),
+    ('liquidtlo', 'LiquidTLO 欧服'),
     ])
 
 watchlist = list(map(lambda x: x[0], roomNameDict.items()))
