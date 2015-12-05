@@ -21,21 +21,23 @@ curl -H 'Accept: application/vnd.twitchtv.v3+json' \
 
 existslist = []
 
-
 @tornado.gen.coroutine
 def start():
     try:
         _existslist = []
         for i in watchlist:
-            http_client = tornado.httpclient.AsyncHTTPClient()
-
-            r = yield http_client.fetch(
-                'https://api.twitch.tv/kraken/streams/'
-                + i,
-                headers={'Accept': 'application/vnd.twitchtv.v3+json'})
-            bd = r.body
-            if json.loads(bd.decode('utf-8')).get('stream'):
-                _existslist.append(i)
+            try:
+                http_client = tornado.httpclient.AsyncHTTPClient()
+                r = yield http_client.fetch(
+                    'https://api.twitch.tv/kraken/streams/'
+                    + i,
+                    headers={'Accept': 'application/vnd.twitchtv.v3+json',
+                        'User-Agent': 'Safari/537.36'})
+                bd = r.body
+                if json.loads(bd.decode('utf-8')).get('stream'):
+                    _existslist.append(i)
+            except:
+                pass
         global existslist
         existslist = _existslist
     except Exception as e:
@@ -55,7 +57,7 @@ def main():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument(
-        '-t', '--looptime', type=int, default=10, help='loop query time')
+        '-t', '--looptime', type=int, default=60, help='loop query time')
     parser.add_argument(
         '-p', '--port', type=int, default=9400, help='set the listened port')
     parser.add_argument(
